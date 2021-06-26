@@ -1,0 +1,655 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                  %%
+%% Copyright (C) 2021 by Martin Debaisieux.                         %%
+%%                                                                  %%
+%% This file may be distributed and/or modified under the           %%
+%% conditions of the LaTeX Project Public License, either           %%
+%% version 1.3 of this license or any later version.                %%
+%% The latest version of this license is in:                        %%
+%%                                                                  %%
+%% http://www.latex-project.org/lppl.txt                            %%
+%%                                                                  %%
+%% and version 1.3 or later is part of all distributions of         %%
+%% LaTeX version 2005/12/01 or later.                               %%
+%%                                                                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{xwriter}[2021-06-20]
+
+\newif\if@empire \@empirefalse
+\newif\if@neoempire \@neoempirefalse
+\newif\if@notes \@notesfalse
+\newif\if@classic \@classicfalse
+\newif\if@framed \@framedfalse
+
+\DeclareOption{empire}{\@empiretrue}
+\DeclareOption{neoempire}{\@neoempiretrue}
+\DeclareOption{notes}{\@notestrue}
+\DeclareOption{classic}{\@classictrue}
+\DeclareOption{framed}{\@framedtrue}
+\DeclareOption*{
+    \PackageWarning{xwriter}{Package xwriter: unknown '\CurrentOption' option}
+}
+\ProcessOptions\relax
+
+\if@empire
+    \if@neoempire
+        \PackageError{xwriter}{incompatible 'empire' and 'neoempire' options}
+    \fi
+    \if@notes
+        \PackageError{xwriter}{incompatible 'empire' and 'notes' options}
+    \fi
+    \if@classic
+        \PackageError{xwriter}{incompatible 'empire' and 'classic' options}
+    \fi
+\fi
+\if@neoempire
+    \if@notes
+        \PackageError{xwriter}{incompatible 'neoempire' and 'notes' options}
+    \fi
+    \if@classic
+        \PackageError{xwriter}{incompatible 'neoempire' and 'classic' options}
+    \fi
+\fi
+\if@notes
+    \if@classic
+        \PackageError{xwriter}{incompatible 'notes' and 'classic' options}
+    \fi
+    \if@framed
+        \PackageError{xwriter}{incompatible 'notes' and 'framed' options}
+    \fi
+\fi
+
+\RequirePackage{amsthm}
+\RequirePackage{ifthen}
+
+\newcommand\shape@env[1]{\itshape #1}
+
+\if@empire
+    \newtheoremstyle{empire}{}{}{}{}{\bfseries\scshape}{.}{ }{}
+    \theoremstyle{empire}
+    \makeatletter
+    \renewcommand{\shape@env}[1]{\scshape #1}
+    \makeatother
+\fi
+\if@neoempire
+    \newtheoremstyle{neoempire}{}{}{}{}{\bfseries}{.}{ }{}
+    \theoremstyle{neoempire}
+    \makeatletter
+    \renewcommand{\shape@env}[1]{\scshape #1}
+    \makeatother
+\fi
+\if@notes
+    \RequirePackage{lmodern}
+    \RequirePackage{mathrsfs}
+    \RequirePackage[dvipsnames]{xcolor}
+    \RequirePackage[many]{tcolorbox}
+    \RequirePackage{titlesec}
+
+    \titleformat*{\section}{\Large\sffamily\bfseries}
+    \titleformat*{\subsection}{\large\sffamily\bfseries}
+    \titleformat*{\subsubsection}{\large\sffamily\bfseries}
+    \titleformat*{\paragraph}{\sffamily\bfseries}
+    \titleformat*{\subparagraph}{\sffamily\bfseries}
+
+    \newtheoremstyle{notes}{}{}{}{}{\sffamily\bfseries}{.}{ }{}
+    \theoremstyle{notes}
+    \makeatletter
+    \renewcommand{\shape@env}[1]{\sffamily\bfseries #1}
+    \makeatother
+
+    \tcolorboxenvironment{axiom}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{axioms}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{corollary}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{definition}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{lemma}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{property}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{properties}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{proposition}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{theorem}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{axiom*}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{axioms*}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{corollary*}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{definition*}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{lemma*}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{property*}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{properties*}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{proposition*}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+    \tcolorboxenvironment{theorem*}{
+        boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+        enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+        sharp corners, before skip=10pt, after skip=10pt, breakable
+    }
+
+    \tcolorboxenvironment{algorithm}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{assumption}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{assumptions}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{claim}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{claims}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{conclusion}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{conjecture}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{example}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{examples}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{exercise}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{exercises}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{hypothesis}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{hypotheses}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{notabene}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{note}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{notes}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{problem}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{summary}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{question}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{questions}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{recall}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{recalls}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{remark}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{remarks}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{algorithm*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{assumption*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{assumptions*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{claim*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{claims*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{conclusion*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{conjecture*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{example*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{examples*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{exercise*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{exercises*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{hypothesis*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{hypotheses*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{notabene*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{note*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{notes*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{problem*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{summary*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{question*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{questions*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{recall*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{recalls*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{remark*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+    \tcolorboxenvironment{remarks*}{
+        boxrule=0pt, boxsep=2pt, blanker,
+        borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+        after skip=10pt, left=12pt, right=12pt, breakable,
+    }
+\fi
+\if@classic
+    \newtheoremstyle{classic}{}{}{}{}{\bfseries}{.}{ }{}
+    \theoremstyle{classic}
+\fi
+\makeatletter
+\if@framed
+    \RequirePackage[dvipsnames]{xcolor}
+    \RequirePackage[many]{tcolorbox}
+
+    \tcolorboxenvironment{axiom}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{axioms}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{corollary}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{definition}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{lemma}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{property}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{properties}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{proposition}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{theorem}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{axiom*}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{axioms*}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{corollary*}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{definition*}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{lemma*}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{property*}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{properties*}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{proposition*}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+    \tcolorboxenvironment{theorem*}{
+        breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+        enhanced jigsaw, sharp corners, before skip=10pt,
+        after skip=10pt, left=7pt, right=7pt
+    }
+
+\fi
+\makeatother
+
+\newtheorem{theorem}{\iflanguage{french}{Théorème}{Theorem}}[section]
+\newtheorem{algorithm}[theorem]{\iflanguage{french}{Algorithme}{Algorithm}}
+\newtheorem{assumption}[theorem]{\iflanguage{french}{Postulat}{Assumption}}
+\newtheorem{assumptions}[theorem]{\iflanguage{french}{Postulats}{Assumptions}}
+\newtheorem{axiom}[theorem]{\iflanguage{french}{Axiome}{Axiom}}
+\newtheorem{axioms}[theorem]{\iflanguage{french}{Axiomes}{Axioms}}
+\newtheorem{claim}[theorem]{\iflanguage{french}{Affirmation}{Claim}}
+\newtheorem{claims}[theorem]{\iflanguage{french}{Affirmations}{Claims}}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{corollary}[theorem]{\iflanguage{french}{Corollaire}{Corollary}}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{definition}[theorem]{\iflanguage{french}{Définition}{Definition}}
+\newtheorem{example}[theorem]{\iflanguage{french}{Exemple}{Example}}
+\newtheorem{examples}[theorem]{\iflanguage{french}{Exemples}{Examples}}
+\newtheorem{exercise}[theorem]{\iflanguage{french}{Exercice}{Exercise}}
+\newtheorem{exercises}[theorem]{\iflanguage{french}{Exercices}{Exercises}}
+\newtheorem{hypothesis}[theorem]{\iflanguage{french}{Hypothèse}{Hypothesis}}
+\newtheorem{hypotheses}[theorem]{\iflanguage{french}{Hypothèses}{Hypotheses}}
+\newtheorem{lemma}[theorem]{\iflanguage{french}{Lemme}{Lemma}}
+\newtheorem{notabene}[theorem]{Nota Bene}
+\newtheorem{note}[theorem]{Note}
+\newtheorem{notes}[theorem]{Notes}
+\newtheorem{problem}[theorem]{\iflanguage{french}{Problème}{Problem}}
+\newtheorem{property}[theorem]{\iflanguage{french}{Propriété}{Property}}
+\newtheorem{properties}[theorem]{\iflanguage{french}{Propriétés}{Properties}}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{summary}[theorem]{\iflanguage{french}{Résumé}{Summary}}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{questions}[theorem]{Questions}
+\newtheorem{recall}[theorem]{\iflanguage{french}{Rappel}{Recall}}
+\newtheorem{recalls}[theorem]{\iflanguage{french}{Rappels}{Recalls}}
+\newtheorem{remark}[theorem]{\iflanguage{french}{Remarque}{Remark}}
+\newtheorem{remarks}[theorem]{\iflanguage{french}{Remarques}{Remarks}}
+
+\newtheorem*{algorithm*}{\iflanguage{french}{Algorithme}{Algorithm}}
+\newtheorem*{assumption*}{\iflanguage{french}{Postulat}{Assumption}}
+\newtheorem*{assumptions*}{\iflanguage{french}{Postulats}{Assumptions}}
+\newtheorem*{axiom*}{\iflanguage{french}{Axiome}{Axiom}}
+\newtheorem*{axioms*}{\iflanguage{french}{Axiomes}{Axioms}}
+\newtheorem*{corollary*}{\iflanguage{french}{Corollaire}{Corollary}}
+\newtheorem*{claim*}{\iflanguage{french}{Affirmation}{Claim}}
+\newtheorem*{claims*}{\iflanguage{french}{Affirmations}{Claims}}
+\newtheorem*{conclusion*}{Conclusion}
+\newtheorem*{conjecture*}{Conjecture}
+\newtheorem*{definition*}{\iflanguage{french}{Définition}{Definition}}
+\newtheorem*{example*}{\iflanguage{french}{Exemple}{Example}}
+\newtheorem*{examples*}{\iflanguage{french}{Exemples}{Examples}}
+\newtheorem*{exercise*}{\iflanguage{french}{Exercice}{Exercise}}
+\newtheorem*{exercises*}{\iflanguage{french}{Exercices}{Exercises}}
+\newtheorem*{hypothesis*}{\iflanguage{french}{Hypothèse}{Hypothesis}}
+\newtheorem*{hypotheses*}{\iflanguage{french}{Hypothèses}{Hypotheses}}
+\newtheorem*{lemma*}{\iflanguage{french}{Lemme}{Lemma}}
+\newtheorem*{notabene*}{Nota Bene}
+\newtheorem*{note*}{Note}
+\newtheorem*{notes*}{Notes}
+\newtheorem*{problem*}{\iflanguage{french}{Problème}{Problem}}
+\newtheorem*{property*}{\iflanguage{french}{Propriété}{Property}}
+\newtheorem*{properties*}{\iflanguage{french}{Propriétés}{Properties}}
+\newtheorem*{proposition*}{Proposition}
+\newtheorem*{summary*}{\iflanguage{french}{Résumé}{Summary}}
+\newtheorem*{question*}{Question}
+\newtheorem*{questions*}{Questions}
+\newtheorem*{recall*}{\iflanguage{french}{Rappel}{Recall}}
+\newtheorem*{recalls*}{\iflanguage{french}{Rappels}{Recalls}}
+\newtheorem*{remark*}{\iflanguage{french}{Remarque}{Remark}}
+\newtheorem*{remarks*}{\iflanguage{french}{Remarques}{Remarks}}
+\newtheorem*{theorem*}{\iflanguage{french}{Théorème}{Theorem}}
+
+\iflanguage{french}{\addto\captionsfrench{\def\proofname{Preuve}}}{}
+\makeatletter
+\renewenvironment*{proof}{\noindent{\shape@env\proofname.}}{}
+\newenvironment*{resolution}{\noindent{\shape@env\iflanguage{french}{Résolution}{Resolution}.}}{}
+
+\newcommand*{\createnumtheorem}[3][notframable]{
+    \newtheorem{#2}[theorem]{#3}
+    \ifthenelse{\equal{#1}{framable}}
+        {\if@framed\tcolorboxenvironment{#2}{
+            breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+            enhanced jigsaw, sharp corners, before skip=10pt,
+            after skip=10pt, left=7pt, right=7pt
+        }\fi
+        \if@notes\tcolorboxenvironment{#2}{
+            boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+            enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+            sharp corners, before skip=10pt, after skip=10pt, breakable
+        }\fi}
+        {\ifthenelse{\equal{#1}{notframable}}
+            {\if@notes\tcolorboxenvironment{#2}{
+                boxrule=0pt, boxsep=2pt, blanker,
+                borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+                after skip=10pt, left=12pt, right=12pt, breakable,
+            }\fi}
+            {\PackageWarning{xwritter}{Package xwritter: unknow '#1' option for 'createnumtheorem' command}}}
+}
+\newcommand*{\createtheorem}[3][notframable]{
+    \newtheorem*{#2}{#3}
+    \ifthenelse{\equal{#1}{framable}}
+        {\if@framed\tcolorboxenvironment{#2}{
+            breakable, boxrule=.5pt, colframe={Black}, opacityback=0,
+            enhanced jigsaw, sharp corners, before skip=10pt,
+            after skip=10pt, left=7pt, right=7pt
+        }\fi
+        \if@notes\tcolorboxenvironment{#2}{
+            boxrule=0pt, boxsep=2pt, colback={White!90!Cerulean},
+            enhanced jigsaw, borderline west={2pt}{0pt}{Cerulean},
+            sharp corners, before skip=10pt, after skip=10pt, breakable
+        }\fi}
+        {\ifthenelse{\equal{#1}{notframable}}
+            {\if@notes\tcolorboxenvironment{#2}{
+                boxrule=0pt, boxsep=2pt, blanker,
+                borderline west={2pt}{0pt}{Cerulean}, before skip=10pt,
+                after skip=10pt, left=12pt, right=12pt, breakable,
+            }\fi}
+            {\PackageWarning{xwritter}{Package xwritter: unknow '#1' option for 'createnumtheorem' command}}}
+}
+\newcommand*{\createproof}[2]{\newenvironment*{#1}{\noindent{\shape@env#2.}}{}}
+\makeatother
+
+\endinput

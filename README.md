@@ -4,9 +4,9 @@
 
 # Xwriter
 
-![development](https://img.shields.io/badge/development-In%20progress-brightgreen)
+![language](https://img.shields.io/badge/language-EN,%20FR-important)
 ![GitHub repo size](https://img.shields.io/github/repo-size/MartinDbx/xwriter)
-![version](https://img.shields.io/badge/version-1.0.0-blue)
+![version](https://img.shields.io/badge/version-v1.0.0-blue)
 [![License](https://img.shields.io/badge/license-LaTeX_Project_Public_License-blue?logo=LaTeX)](LICENSE)
 
 

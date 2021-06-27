@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="resources/logo.png" width="200">
+  <img src="resources/logo.png" width="400">
 </div>
 
 # Xwriter
@@ -14,7 +14,7 @@ LaTeX stylized mathematical environments.
 
 -----------------------------------------------------------
 ### Package content
-The complete documentation is available [(not yet) here](resources/xwriter-documentation.pdf).
+The complete documentation is available [here](resources/xwriter-documentation.pdf).
 
 -----------------------------------------------------------
 ### Automatic installation

@@ -13,7 +13,7 @@
 
 </div>
 
-LaTeX stylized mathematical environments.
+The Xwriter package is a simple way to structure a consistent layout. It defines a common framework which supports different implemented typographic styles. This package also includes a large number of mathematical environments.
 
 -----------------------------------------------------------
 ### Package content

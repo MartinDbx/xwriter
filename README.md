@@ -4,11 +4,14 @@
 
 # Xwriter
 
-![language](https://img.shields.io/badge/language-EN,%20FR-important)
-![GitHub repo size](https://img.shields.io/github/repo-size/MartinDbx/xwriter)
-![version](https://img.shields.io/badge/version-v1.0.0-blue)
-[![License](https://img.shields.io/badge/license-LaTeX_Project_Public_License-blue?logo=LaTeX)](LICENSE)
+<div align="center">
 
+  ![language](https://img.shields.io/badge/language-EN,%20FR-important)
+  ![GitHub repo size](https://img.shields.io/github/repo-size/MartinDbx/xwriter)
+  ![version](https://img.shields.io/badge/version-v1.0.0-blue)
+  [![License](https://img.shields.io/badge/license-LaTeX_Project_Public_License-blue?logo=LaTeX)](LICENSE)
+
+</div>
 
 LaTeX stylized mathematical environments.
 

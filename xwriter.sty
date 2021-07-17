@@ -604,7 +604,7 @@
 
 \iflanguage{french}{\addto\captionsfrench{\def\proofname{Preuve}}}{}
 \makeatletter
-\renewenvironment*{proof}{\noindent{\shape@env\proofname.}}{}
+\renewenvironment*{proof}{\noindent{\shape@env\proofname.}}{\hfill\qedsymbol}
 \newenvironment*{resolution}{\noindent{\shape@env\iflanguage{french}{Résolution}{Resolution}.}}{}
 \newenvironment*{solution}{\noindent{\shape@env Solution.}}{}
 
